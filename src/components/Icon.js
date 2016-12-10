@@ -18,11 +18,15 @@ class Icon extends Component {
 		const { type } = this.props;
 
 		if(type !== null) {
+			this.props.addToCache(type);
+		}
 
-			if(!includes(this.props.cached, type)) {
-				this.props.addToCache(type);
-			}
+	}
 
+	componentWillUnmount() {
+
+		if(includes(this.props.cached, this.props.type)) {
+			this.props.removeFromCache(this.props.type);
 		}
 
 	}
@@ -43,6 +47,8 @@ class Icon extends Component {
 				width={width}
 				height={height}
 				iconsData={this.props.iconsData}
+				style={this.props.style}
+				svgStyle={this.props.svgStyle}
 			/>
 		);
 
