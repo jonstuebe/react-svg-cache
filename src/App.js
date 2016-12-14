@@ -40,17 +40,85 @@ class App extends Component {
             title='React SVG Cache'
           />
 
-          <Icon type='pin' width={200} svgStyle={{
-            fill: '#D80068'
-          }} />
+          <Icon
+            type='pin'
+            width={300}
+          />
 
-          {/*
-          <Icon type='pin' width={50} />
-          <Icon type='pin' width={50} />
-          <Icon type='pin' width={50} style={{
-            fill: 'blue'
-          }} />
-          */}
+          <Icon
+            type='rectangle'
+            width={250}
+            attrs={{
+              width: 250,
+              height: 250,
+              fill: '#ccc'
+            }}
+
+          >
+            {({ iconData }) => (
+              <animate attributeType="XML" attributeName="x" from='-200' to='200' dur='1.5s' repeatCount='indefinite' />
+            )}
+          </Icon>
+
+          <Icon
+            type='circle'
+            width={100}
+            attrs={{
+              filter: 'url(#image)'
+            }}
+            filter={({ iconData }) => (
+              <filter id="image">
+                <feImage xlinkHref="https://raw.githubusercontent.com/wiki/facebook/react/react-logo-1000-transparent.png" />
+              </filter>
+            )}
+          />
+
+          <Icon
+            type='star'
+            width={300}
+            attrs={{
+              fill: 'blue',
+              filter: 'url(#dropShadow)'
+            }}
+            filter={({ iconData }) => (
+              <filter id="dropShadow">
+                <feGaussianBlur in="SourceAlpha" stdDeviation=".4" />
+                <feOffset dx=".3" dy=".5" />
+                <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            )}
+          />
+
+          <Icon
+            type='circle'
+            width={200}
+            attrs={{
+              filter: 'url(#lighting)'
+            }}
+            filter={({ iconData }) => (
+              <filter id="lighting">
+                <feSpecularLighting
+                  result="specOut"
+                  specularExponent="20"
+                  lightingColor="#bbbbbb"
+                >
+                  <fePointLight x="50" y="75" z="200"/>
+                </feSpecularLighting>
+                <feComposite
+                  in="SourceGraphic"
+                  in2="specOut"
+                  operator="arithmetic"
+                  k1="0"
+                  k2="1"
+                  k3="1"
+                  k4="0"
+                />
+              </filter>
+            )}
+          />
 
           {this.state.icons.map((icon, index) => {
             return <Icon type={icon.type} key={index} />
@@ -70,7 +138,21 @@ class App extends Component {
             <RaisedButton onClick={this.onButtonPress.bind(this, 'pin', true)} style={{ margin: '0 5px' }}>Remove Pin</RaisedButton>
             <RaisedButton onClick={this.onButtonPress.bind(this, 'star', true)} style={{ margin: '0 5px' }}>Remove Star</RaisedButton>
           </div>
-  				<IconsCache />
+
+  				<IconsCache>
+            <svg name='pin' width="50" height="50" viewBox="0 0 20 20">
+              <path d="M10,1.375c-3.17,0-5.75,2.548-5.75,5.682c0,6.685,5.259,11.276,5.483,11.469c0.152,0.132,0.382,0.132,0.534,0c0.224-0.193,5.481-4.784,5.483-11.469C15.75,3.923,13.171,1.375,10,1.375 M10,17.653c-1.064-1.024-4.929-5.127-4.929-10.596c0-2.68,2.212-4.861,4.929-4.861s4.929,2.181,4.929,4.861C14.927,12.518,11.063,16.627,10,17.653 M10,3.839c-1.815,0-3.286,1.47-3.286,3.286s1.47,3.286,3.286,3.286s3.286-1.47,3.286-3.286S11.815,3.839,10,3.839 M10,9.589c-1.359,0-2.464-1.105-2.464-2.464S8.641,4.661,10,4.661s2.464,1.105,2.464,2.464S11.359,9.589,10,9.589"></path>
+            </svg>
+            <svg name='star' width="50" height="50" viewBox="0 0 20 20">
+              <path d="M17.684,7.925l-5.131-0.67L10.329,2.57c-0.131-0.275-0.527-0.275-0.658,0L7.447,7.255l-5.131,0.67C2.014,7.964,1.892,8.333,2.113,8.54l3.76,3.568L4.924,17.21c-0.056,0.297,0.261,0.525,0.533,0.379L10,15.109l4.543,2.479c0.273,0.153,0.587-0.089,0.533-0.379l-0.949-5.103l3.76-3.568C18.108,8.333,17.986,7.964,17.684,7.925 M13.481,11.723c-0.089,0.083-0.129,0.205-0.105,0.324l0.848,4.547l-4.047-2.208c-0.055-0.03-0.116-0.045-0.176-0.045s-0.122,0.015-0.176,0.045l-4.047,2.208l0.847-4.547c0.023-0.119-0.016-0.241-0.105-0.324L3.162,8.54L7.74,7.941c0.124-0.016,0.229-0.093,0.282-0.203L10,3.568l1.978,4.17c0.053,0.11,0.158,0.187,0.282,0.203l4.578,0.598L13.481,11.723z"></path>
+            </svg>
+            <svg name='circle' width="200" height="200" viewBox="0 0 220 220">
+              <circle cx="110" cy="110" r="100" />
+            </svg>
+            <svg name='rectangle' width="100" height="100" viewBox="0 0 120 120">
+              <rect x="10" y="10" width="100" height="100"></rect>
+            </svg>
+          </IconsCache>
         </div>
       </Provider>
     );

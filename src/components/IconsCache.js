@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { uniq } from 'lodash';
+import { isEmpty, uniq } from 'lodash';
+
+import * as ActionCreators from '../actions/icons';
 
 import SvgIcon from './SvgIcon';
 
 class IconsCache extends Component {
+
+	componentWillMount() {
+		this.props.addIcons(this.props.children);
+	}
+
 	render() {
-		if(this.props.cached.length === 0)
+		if(this.props.cached.length === 0 || isEmpty(this.props.iconsData) === 0)
 			return null;
 
 		return (
@@ -32,6 +40,11 @@ const mapStateToProps = (state) => {
   return { cached: state.icons.cached, iconsData: state.icons.data };
 }
 
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators(ActionCreators, dispatch);
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+	mapDispatchToProps
 )(IconsCache);

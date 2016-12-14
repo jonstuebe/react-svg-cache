@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { filter, head } from 'lodash';
 
 class SvgIcon extends Component {
 
@@ -10,17 +11,23 @@ class SvgIcon extends Component {
 	};
 
 	getRatio(iconData) {
-		return iconData.width / iconData.height;
+		return iconData.props.width / iconData.props.height;
 	}
 
 	getHeight(width, iconData) {
 		return width / this.getRatio(iconData);
 	}
 
+	getIconData(iconsData) {
+		return head(filter(iconsData, (icon) => {
+			return icon.props.name === this.props.type;
+		}));
+	}
+
 	render() {
 
-		const { asGroup, cached, type, width, height, iconsData, svgStyle, style } = this.props;
-		const iconData = iconsData[type];
+		const { asGroup, attrs, cached, filter, width, height, iconsData, innerData, style, type } = this.props;
+		const iconData = this.getIconData(iconsData);
 
 		if(!iconData)
 			return null;
@@ -32,8 +39,9 @@ class SvgIcon extends Component {
 
 		if(cached) {
 			return (
-				<svg width={size.width} height={size.height} viewBox={iconData.viewBox} className={`icon-${type}`} style={style}>
-					<use xlinkHref={`#${type}`} {...svgStyle}></use>
+				<svg width={size.width} height={size.height} viewBox={iconData.props.viewBox} className={`icon-${type}`} style={style}>
+					<use xlinkHref={`#${type}`} {...attrs}>{(innerData) ? innerData({ iconData }) : null}</use>
+					{(filter) ? filter({ iconData }) : null}
 				</svg>
 			);
 		}
@@ -41,16 +49,10 @@ class SvgIcon extends Component {
 		if(asGroup) {
 			return (
 				<g id={type}>
-					{iconData.paths}
+					{iconData.props.children}
 				</g>
 			)
 		}
-
-		return (
-			<svg width={size.width} height={size.height} viewBox={iconData.viewBox} className={`icon-${type}`}>
-				{iconData.paths}
-			</svg>
-		);
 
 	}
 }

@@ -11,3 +11,10 @@ export function removeFromCache(iconType) {
 		iconType
 	}
 }
+
+export function addIcons(icons) {
+	return {
+		type: 'ADD_ICONS',
+		icons
+	}
+}
