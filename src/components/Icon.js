@@ -33,7 +33,7 @@ class Icon extends Component {
 
 	render() {
 
-		const { attrs, children, width, filter, height, iconsData, style, type } = this.props;
+		const { attrs, children, width, height, iconsData, sibling, style, type } = this.props;
 
 		if(type === null)
 			return null;
@@ -46,7 +46,7 @@ class Icon extends Component {
 				cached={cached}
 				width={width}
 				height={height}
-				filter={filter}
+				sibling={sibling}
 				iconsData={iconsData}
 				style={style}
 				attrs={attrs}

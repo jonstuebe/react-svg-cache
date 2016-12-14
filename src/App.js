@@ -53,7 +53,6 @@ class App extends Component {
               height: 250,
               fill: '#ccc'
             }}
-
           >
             {({ iconData }) => (
               <animate attributeType="XML" attributeName="x" from='-200' to='200' dur='1.5s' repeatCount='indefinite' />
@@ -66,7 +65,7 @@ class App extends Component {
             attrs={{
               filter: 'url(#image)'
             }}
-            filter={({ iconData }) => (
+            sibling={({ iconData }) => (
               <filter id="image">
                 <feImage xlinkHref="https://raw.githubusercontent.com/wiki/facebook/react/react-logo-1000-transparent.png" />
               </filter>
@@ -80,7 +79,7 @@ class App extends Component {
               fill: 'blue',
               filter: 'url(#dropShadow)'
             }}
-            filter={({ iconData }) => (
+            sibling={({ iconData }) => (
               <filter id="dropShadow">
                 <feGaussianBlur in="SourceAlpha" stdDeviation=".4" />
                 <feOffset dx=".3" dy=".5" />
@@ -98,7 +97,7 @@ class App extends Component {
             attrs={{
               filter: 'url(#lighting)'
             }}
-            filter={({ iconData }) => (
+            sibling={({ iconData }) => (
               <filter id="lighting">
                 <feSpecularLighting
                   result="specOut"

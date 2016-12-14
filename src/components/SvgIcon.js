@@ -26,7 +26,7 @@ class SvgIcon extends Component {
 
 	render() {
 
-		const { asGroup, attrs, cached, filter, width, height, iconsData, innerData, style, type } = this.props;
+		const { asGroup, attrs, cached, sibling, width, height, iconsData, innerData, style, type } = this.props;
 		const iconData = this.getIconData(iconsData);
 
 		if(!iconData)
@@ -41,7 +41,7 @@ class SvgIcon extends Component {
 			return (
 				<svg width={size.width} height={size.height} viewBox={iconData.props.viewBox} className={`icon-${type}`} style={style}>
 					<use xlinkHref={`#${type}`} {...attrs}>{(innerData) ? innerData({ iconData }) : null}</use>
-					{(filter) ? filter({ iconData }) : null}
+					{(sibling) ? sibling({ iconData }) : null}
 				</svg>
 			);
 		}
