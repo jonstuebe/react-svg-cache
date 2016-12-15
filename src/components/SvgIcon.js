@@ -54,6 +54,8 @@ class SvgIcon extends Component {
 			)
 		}
 
+		return null;
+
 	}
 }
 
